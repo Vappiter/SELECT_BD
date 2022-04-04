@@ -10,7 +10,7 @@ os.chdir(file_path [0]) # Устанавливает директорию
 with open("file_BD.csv") as f:
   rows = csv.reader(f, delimiter=";")
   data_bd = list(rows)
-pprint (data_bd)
+# pprint (data_bd)
 
 db = 'postgresql://postgres:123456@localhost:5432/test_py47'
 engine = sqlalchemy.create_engine(db)
@@ -22,8 +22,9 @@ connection = engine.connect()
 for data_bd_2 in data_bd:
   musician_test = connection.execute('''SELECT musician_name FROM musician;''')
   if musician_test.fetchone() == None:
-      connection.execute('''INSERT INTO musician (musician_name, musician_nickname) VALUES (str(data_db_2[0]), str(data_db_2[1]));''')
-      pprint('Пусто')
+      sql_text = '''INSERT INTO musician (musician_name, musician_nickname) VALUES (%s, %s)'''
+      data_insert = data_bd_2[0], data_bd_2[1]
+      connection.execute(sql_text, data_insert)
   else:
       pprint ('УРА!!! Работает')  
   pprint (musician_test)
