@@ -17,7 +17,10 @@ def insert_table(colums,len_list):
 file_path = (os.path.split(__file__)) # Считывает текущую директорию скрипта, тут же должен храниться файл CSV
 os.chdir(file_path [0]) # Устанавливает директорию
 with open("file_BD.csv") as f:
-  rows = csv.reader(f, delimiter=";")
+  rows = csv.DictReader(f, delimiter=";")
+  # pprint (rows)
+  for row in rows:
+    print(row['musician_name'], row['album_year'])
   data_bd = list(rows)
 # pprint (data_bd)
 
